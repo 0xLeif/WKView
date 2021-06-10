@@ -8,7 +8,6 @@
 import SwiftUI
 import WebKit
 
-@available(iOS 13.0, *)
 public struct WebPresenterView: View {
     public enum NavigationAction {
         case decidePolicy(WKWebView, WKNavigationAction, WKNavigationActionPolicy)

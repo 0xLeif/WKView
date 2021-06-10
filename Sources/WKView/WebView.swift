@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 import WebKit
 
-@available(iOS 14.0, *)
 public struct WebView<LoadingContent: View>: View {
     
     let data: WebViewData
@@ -35,7 +34,7 @@ public struct WebView<LoadingContent: View>: View {
         self.loadingView = loadingView
     }
     
-    @StateObject var webViewStateModel: WebViewStateModel = WebViewStateModel()
+    @ObservedObject var webViewStateModel: WebViewStateModel = WebViewStateModel()
     
     public var body: some View {
         WebPresenterView(

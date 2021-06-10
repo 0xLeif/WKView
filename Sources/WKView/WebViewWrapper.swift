@@ -14,7 +14,6 @@ public enum WebViewData {
     case html(String, URL?)
 }
 
-@available(iOS 13.0, *)
 final public class WebViewWrapper: UIViewRepresentable {
     
     @ObservedObject var webViewStateModel: WebViewStateModel
@@ -105,7 +104,6 @@ final public class WebViewWrapper: UIViewRepresentable {
     }
 }
 
-@available(iOS 13.0, *)
 extension WebViewWrapper.Coordinator: WKNavigationDelegate {
     
     public func handleAllowedHosts(
