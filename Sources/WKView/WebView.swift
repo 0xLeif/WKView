@@ -38,17 +38,24 @@ public struct WebView<LoadingContent: View>: View {
     @StateObject var webViewStateModel: WebViewStateModel = WebViewStateModel()
     
     public var body: some View {
-        if webViewStateModel.loading {
-            loadingView()
-        } else {
-            WebPresenterView(
-                webViewData: data,
-                webViewStateModel: webViewStateModel,
-                onNavigationAction: onNavigationAction,
-                allowedHosts: allowedHosts,
-                forbiddenHosts: forbiddenHosts,
-                credential: credential
-            )
+        WebPresenterView(
+            webViewData: data,
+            webViewStateModel: webViewStateModel,
+            onNavigationAction: onNavigationAction,
+            allowedHosts: allowedHosts,
+            forbiddenHosts: forbiddenHosts,
+            credential: credential
+        )
+        .overlay(loadingContent)
+    }
+    
+    private var loadingContent: some View {
+        Group {
+            if webViewStateModel.loading {
+                loadingView()
+            } else {
+                EmptyView()
+            }
         }
     }
 }
