@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 class WebViewStateModel: ObservableObject {
-    @Published var loading: Bool = false
+    @Published var loading: Bool = true
     @Published var canGoBack: Bool = false
     @Published var goBack: Bool = false
     @Published var canGoForward: Bool = false
