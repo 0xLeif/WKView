@@ -27,8 +27,6 @@ public struct WebPresenterView: View {
     
     let webViewData: WebViewData
     
-    let title: String?
-    
     let allowedHosts: [String]?
     let forbiddenHosts: [String]?
     let credential: URLCredential?
@@ -37,7 +35,6 @@ public struct WebPresenterView: View {
         WebViewWrapper(
             webViewStateModel: webViewStateModel,
             webViewData: webViewData,
-            title: title,
             action: actionDelegate,
             allowedHosts: allowedHosts,
             forbiddenHosts: forbiddenHosts,
@@ -48,7 +45,6 @@ public struct WebPresenterView: View {
     init(
         webViewData: WebViewData,
         webViewStateModel: WebViewStateModel,
-        title: String?,
         onNavigationAction: ((_ navigationAction: WebPresenterView.NavigationAction) -> Void)?,
         allowedHosts: [String]?,
         forbiddenHosts: [String]?,
@@ -56,7 +52,6 @@ public struct WebPresenterView: View {
     ) {
         self.webViewData = webViewData
         self.webViewStateModel = webViewStateModel
-        self.title = title
         self.actionDelegate = onNavigationAction
         self.allowedHosts = allowedHosts
         self.forbiddenHosts = forbiddenHosts

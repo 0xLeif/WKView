@@ -9,7 +9,6 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 class WebViewStateModel: ObservableObject {
-    @Published var pageTitle: String = "Loading..."
     @Published var loading: Bool = false
     @Published var canGoBack: Bool = false
     @Published var goBack: Bool = false
