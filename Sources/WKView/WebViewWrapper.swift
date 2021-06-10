@@ -15,7 +15,7 @@ public enum WebViewData {
 }
 
 @available(iOS 13.0, *)
-final public class WebViewWrapper : UIViewRepresentable {
+final public class WebViewWrapper: UIViewRepresentable {
     
     @ObservedObject var webViewStateModel: WebViewStateModel
     let action: ((_ navigationAction: WebPresenterView.NavigationAction) -> Void)?
@@ -120,7 +120,6 @@ extension WebViewWrapper.Coordinator: WKNavigationDelegate {
                 var allowed = false
                 allowedHosts.forEach { (allowedHost) in
                     if host.contains(allowedHost) {
-                        print("WebView -> Found allowed host: \(allowedHost)")
                         allowed = true
                     }
                 }
@@ -129,14 +128,12 @@ extension WebViewWrapper.Coordinator: WKNavigationDelegate {
                     decisionHandler(.allow)
                     action?(.decidePolicy(webView, navigationAction, .allow))
                 } else {
-                    print("WebView -> Did not find allowed hosts for: \(host)")
                     decisionHandler(.cancel)
                     action?(.decidePolicy(webView, navigationAction, .cancel))
                 }
             }
             
         } else {
-            print("WebView -> No allowed host are set")
             decisionHandler(.allow)
             action?(.decidePolicy(webView, navigationAction, .allow))
         }
@@ -154,7 +151,6 @@ extension WebViewWrapper.Coordinator: WKNavigationDelegate {
                 var forbidden = false
                 forbiddenHosts.forEach { (forbiddenHost) in
                     if host.contains(forbiddenHost) {
-                        print("WebView -> Found forbidden host: \(forbiddenHost)")
                         forbidden = true
                     }
                 }
@@ -163,7 +159,6 @@ extension WebViewWrapper.Coordinator: WKNavigationDelegate {
                     decisionHandler(.cancel)
                     action?(.decidePolicy(webView, navigationAction, .cancel))
                 } else {
-                    print("WebView -> Did not find forbidden hosts for: \(host)")
                     handleAllowedHosts(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
                 }
                 
@@ -173,7 +168,6 @@ extension WebViewWrapper.Coordinator: WKNavigationDelegate {
             }
             
         } else {
-            print("WebView -> No forbidden host are set")
             handleAllowedHosts(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
         }
     }

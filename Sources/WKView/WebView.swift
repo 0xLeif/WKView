@@ -10,36 +10,37 @@ import UIKit
 import WebKit
 
 @available(iOS 14.0, *)
-public struct WebView: View {
+public struct WebView<LoadingContent: View>: View {
     
     let data: WebViewData
-    let tintColor: Color
     var allowedHosts: [String]?
     var forbiddenHosts: [String]?
     var credential: URLCredential?
     var onNavigationAction: ((_ navigationAction: WebPresenterView.NavigationAction) -> Void)?
+    var loadingView: () -> LoadingContent
     
     public init(
         data: WebViewData,
-        tintColor: Color = .blue,
         allowedHosts: [String]? = nil,
         forbiddenHosts: [String]? = nil,
         credential: URLCredential? = nil,
-        onNavigationAction: ((_ navigationAction: WebPresenterView.NavigationAction) -> Void)? = nil
+        onNavigationAction: ((_ navigationAction: WebPresenterView.NavigationAction) -> Void)? = nil,
+        loadingView: @escaping () -> LoadingContent
     ) {
         self.data = data
-        self.tintColor = tintColor
         self.allowedHosts = allowedHosts
         self.forbiddenHosts = forbiddenHosts
         self.credential = credential
         self.onNavigationAction = onNavigationAction
+        self.loadingView = loadingView
     }
     
     @StateObject var webViewStateModel: WebViewStateModel = WebViewStateModel()
-    @Environment(\.presentationMode) var presentationMode
     
     public var body: some View {
-        LoadingView(isShowing: .constant(webViewStateModel.loading)) {
+        if webViewStateModel.loading {
+            loadingView()
+        } else {
             WebPresenterView(
                 webViewData: data,
                 webViewStateModel: webViewStateModel,
